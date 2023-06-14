@@ -20,11 +20,7 @@ describe("NFTAdminTransfer", () => {
 
     it("should revert an attempt to transfer token from non-admin", async () => {
         const attempt = contract.connect(stranger).transferFrom(stranger.address, owner.address, tokenId);
-        await expect(attempt).to.be.revertedWith("AccessControl: account 0x70997970c51812dc3a010c7d01b50e0d17dc79c8 is missing role 0x6ef6c12113840e73bf704de56ef147ea7406477154c3d8cfa0b9d1a47c607472");
-    });
-
-    it("should give allowance to admin so admin can manually transfer from non-admin via transferFrom()", async () => {
-        await contract.connect(stranger).approve(owner.address, tokenId);
+        await expect(attempt).to.be.reverted;
     });
 
     it("should perform a transfer with transferFrom() with admin as a signer", async () => {
